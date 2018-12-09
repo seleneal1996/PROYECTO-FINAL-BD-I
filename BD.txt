@@ -1,0 +1,918 @@
+CREATE DATABASE  IF NOT EXISTS `venta_auto` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `venta_auto`;
+-- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
+--
+-- Host: localhost    Database: venta_auto
+-- ------------------------------------------------------
+-- Server version	8.0.13
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+ SET NAMES utf8 ;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `agrupacion`
+--
+
+DROP TABLE IF EXISTS `agrupacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `agrupacion` (
+  `idAgrupacion` int(11) NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(45) NOT NULL,
+  `Descripion` varchar(45) DEFAULT NULL,
+  `Marca_idMarca` int(11) NOT NULL,
+  PRIMARY KEY (`idAgrupacion`),
+  KEY `fk_Agrupacion_Marca1_idx` (`Marca_idMarca`),
+  CONSTRAINT `fk_Agrupacion_Marca1` FOREIGN KEY (`Marca_idMarca`) REFERENCES `marca` (`idmarca`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `agrupacion`
+--
+
+LOCK TABLES `agrupacion` WRITE;
+/*!40000 ALTER TABLE `agrupacion` DISABLE KEYS */;
+INSERT INTO `agrupacion` VALUES (1,'Picanto','barato',4);
+/*!40000 ALTER TABLE `agrupacion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `almacen`
+--
+
+DROP TABLE IF EXISTS `almacen`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `almacen` (
+  `idAlmacen` int(11) NOT NULL AUTO_INCREMENT,
+  `Direccion` varchar(45) NOT NULL,
+  `Telefono` varchar(45) NOT NULL,
+  `Estado_Almacen_idEstado` int(11) NOT NULL,
+  PRIMARY KEY (`idAlmacen`),
+  KEY `fk_Almacen_Estado_Almacen1_idx` (`Estado_Almacen_idEstado`),
+  CONSTRAINT `fk_Almacen_Estado_Almacen1` FOREIGN KEY (`Estado_Almacen_idEstado`) REFERENCES `estado_almacen` (`idestado`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `almacen`
+--
+
+LOCK TABLES `almacen` WRITE;
+/*!40000 ALTER TABLE `almacen` DISABLE KEYS */;
+INSERT INTO `almacen` VALUES (1,'psj. Comandante 104','965832148',1);
+/*!40000 ALTER TABLE `almacen` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `almacen_has_sucursal`
+--
+
+DROP TABLE IF EXISTS `almacen_has_sucursal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `almacen_has_sucursal` (
+  `Almacen_idAlmacen` int(11) NOT NULL,
+  `Sucursal_idSucursal` int(11) NOT NULL,
+  PRIMARY KEY (`Almacen_idAlmacen`,`Sucursal_idSucursal`),
+  KEY `fk_Almacen_has_Sucursal_Almacen1_idx` (`Almacen_idAlmacen`),
+  KEY `fk_Almacen_has_Sucursal_Sucursal1_idx` (`Sucursal_idSucursal`),
+  CONSTRAINT `fk_Almacen_has_Sucursal_Almacen1` FOREIGN KEY (`Almacen_idAlmacen`) REFERENCES `almacen` (`idalmacen`),
+  CONSTRAINT `fk_Almacen_has_Sucursal_Sucursal1` FOREIGN KEY (`Sucursal_idSucursal`) REFERENCES `sucursal` (`idsucursal`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `almacen_has_sucursal`
+--
+
+LOCK TABLES `almacen_has_sucursal` WRITE;
+/*!40000 ALTER TABLE `almacen_has_sucursal` DISABLE KEYS */;
+INSERT INTO `almacen_has_sucursal` VALUES (1,1);
+/*!40000 ALTER TABLE `almacen_has_sucursal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `asociado`
+--
+
+DROP TABLE IF EXISTS `asociado`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `asociado` (
+  `DNI` int(11) NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(45) DEFAULT NULL,
+  `Direccion` varchar(45) DEFAULT NULL,
+  `Telefono` int(6) DEFAULT NULL,
+  `Cargo_idCargo` int(11) NOT NULL,
+  PRIMARY KEY (`DNI`),
+  KEY `fk_Asociado_Cargo1_idx` (`Cargo_idCargo`),
+  CONSTRAINT `fk_Asociado_Cargo1` FOREIGN KEY (`Cargo_idCargo`) REFERENCES `cargo` (`idcargo`)
+) ENGINE=InnoDB AUTO_INCREMENT=79863457 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asociado`
+--
+
+LOCK TABLES `asociado` WRITE;
+/*!40000 ALTER TABLE `asociado` DISABLE KEYS */;
+INSERT INTO `asociado` VALUES (72050160,'Carlos Galdos','Alcide carrion 800',985632147,2),(75560789,'Lazlo Cervantes','los orquideos #500',451591896,2),(79461382,'Carlos Novives','Los canarios 492#',979561248,1),(79863456,'Alberto Apaza','Los Germanios 400#',963852471,2);
+/*!40000 ALTER TABLE `asociado` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `asociado_has_sucursal`
+--
+
+DROP TABLE IF EXISTS `asociado_has_sucursal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `asociado_has_sucursal` (
+  `Asociado_DNI` int(11) NOT NULL,
+  `Sucursal_idSucursal` int(11) NOT NULL,
+  PRIMARY KEY (`Asociado_DNI`,`Sucursal_idSucursal`),
+  KEY `fk_Asociado_has_Sucursal_Sucursal1_idx` (`Sucursal_idSucursal`),
+  KEY `fk_Asociado_has_Sucursal_Asociado1_idx` (`Asociado_DNI`),
+  CONSTRAINT `fk_Asociado_has_Sucursal_Asociado1` FOREIGN KEY (`Asociado_DNI`) REFERENCES `asociado` (`dni`),
+  CONSTRAINT `fk_Asociado_has_Sucursal_Sucursal1` FOREIGN KEY (`Sucursal_idSucursal`) REFERENCES `sucursal` (`idsucursal`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asociado_has_sucursal`
+--
+
+LOCK TABLES `asociado_has_sucursal` WRITE;
+/*!40000 ALTER TABLE `asociado_has_sucursal` DISABLE KEYS */;
+INSERT INTO `asociado_has_sucursal` VALUES (72050160,1);
+/*!40000 ALTER TABLE `asociado_has_sucursal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cargo`
+--
+
+DROP TABLE IF EXISTS `cargo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `cargo` (
+  `idCargo` int(11) NOT NULL AUTO_INCREMENT,
+  `Descripcion` varchar(45) NOT NULL,
+  PRIMARY KEY (`idCargo`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cargo`
+--
+
+LOCK TABLES `cargo` WRITE;
+/*!40000 ALTER TABLE `cargo` DISABLE KEYS */;
+INSERT INTO `cargo` VALUES (1,'Vendedor'),(2,'Cajero'),(3,'Promotor'),(4,'Administrador');
+/*!40000 ALTER TABLE `cargo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cliente`
+--
+
+DROP TABLE IF EXISTS `cliente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `cliente` (
+  `DNI` int(11) NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(45) NOT NULL,
+  `Apellidos` varchar(45) NOT NULL,
+  `Tipo_Persona_idTipo_Cliente` int(11) NOT NULL,
+  PRIMARY KEY (`DNI`),
+  KEY `fk_Cliente_Tipo_Persona1_idx` (`Tipo_Persona_idTipo_Cliente`),
+  CONSTRAINT `fk_Cliente_Tipo_Persona1` FOREIGN KEY (`Tipo_Persona_idTipo_Cliente`) REFERENCES `tipo_persona` (`idtipo_cliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=72050161 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cliente`
+--
+
+LOCK TABLES `cliente` WRITE;
+/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` VALUES (72050160,'Pablo','Guzman',1);
+/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `compra`
+--
+
+DROP TABLE IF EXISTS `compra`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `compra` (
+  `idcompra` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` date NOT NULL,
+  PRIMARY KEY (`idcompra`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `compra`
+--
+
+LOCK TABLES `compra` WRITE;
+/*!40000 ALTER TABLE `compra` DISABLE KEYS */;
+INSERT INTO `compra` VALUES (1,'2018-12-21');
+/*!40000 ALTER TABLE `compra` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `concepto`
+--
+
+DROP TABLE IF EXISTS `concepto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `concepto` (
+  `idConcepto` int(11) NOT NULL AUTO_INCREMENT,
+  `Concepto` varchar(45) NOT NULL,
+  PRIMARY KEY (`idConcepto`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `concepto`
+--
+
+LOCK TABLES `concepto` WRITE;
+/*!40000 ALTER TABLE `concepto` DISABLE KEYS */;
+INSERT INTO `concepto` VALUES (1,'Regular'),(2,'Navidad'),(3,'Fiestas');
+/*!40000 ALTER TABLE `concepto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `contacto`
+--
+
+DROP TABLE IF EXISTS `contacto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `contacto` (
+  `idContacto` int(11) NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(45) DEFAULT NULL,
+  `Telefono` varchar(45) DEFAULT NULL,
+  `Correo` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idContacto`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contacto`
+--
+
+LOCK TABLES `contacto` WRITE;
+/*!40000 ALTER TABLE `contacto` DISABLE KEYS */;
+INSERT INTO `contacto` VALUES (1,'Pablo Guzman Quispe','921494552','pbl_890@hotmail.com'),(2,'Eduardo Quispe','951369158','eduarq@gmail.com'),(3,'Avelardo Fuentes','954569858','avelardo@gmail.com'),(4,'Pedro Chavarry','9865769158','pchavarry@gmail.com'),(5,'Wallas Willian','951369986','wallasw@gmail.com'),(6,'Debora Felicitas','985367425','debof@gmail.com'),(7,'Candy Crush','957982345','CCrush@gmail.com'),(8,'Ryzen Perez','451596','ryzenhash@gmail.com'),(9,'Alfredo Torne','989564512','alftor@gmail.com');
+/*!40000 ALTER TABLE `contacto` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `empresa`
+--
+
+DROP TABLE IF EXISTS `empresa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `empresa` (
+  `idEmpresa` int(11) NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(45) NOT NULL,
+  `Razon_Social` varchar(45) NOT NULL,
+  `RUC` varchar(45) NOT NULL,
+  PRIMARY KEY (`idEmpresa`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `empresa`
+--
+
+LOCK TABLES `empresa` WRITE;
+/*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
+INSERT INTO `empresa` VALUES (1,'MRAuto','MRAuto S.R.L.','05272050160');
+/*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `estado_almacen`
+--
+
+DROP TABLE IF EXISTS `estado_almacen`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `estado_almacen` (
+  `idEstado` int(11) NOT NULL AUTO_INCREMENT,
+  `Descripcion` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`idEstado`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `estado_almacen`
+--
+
+LOCK TABLES `estado_almacen` WRITE;
+/*!40000 ALTER TABLE `estado_almacen` DISABLE KEYS */;
+INSERT INTO `estado_almacen` VALUES (1,'activo'),(2,'inactivo'),(3,'lleno');
+/*!40000 ALTER TABLE `estado_almacen` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `estado_venta`
+--
+
+DROP TABLE IF EXISTS `estado_venta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `estado_venta` (
+  `idEstado_Venta` int(11) NOT NULL AUTO_INCREMENT,
+  `Estado` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idEstado_Venta`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `estado_venta`
+--
+
+LOCK TABLES `estado_venta` WRITE;
+/*!40000 ALTER TABLE `estado_venta` DISABLE KEYS */;
+INSERT INTO `estado_venta` VALUES (1,'orden'),(2,'realizado'),(3,'inactivo');
+/*!40000 ALTER TABLE `estado_venta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gastosservicios`
+--
+
+DROP TABLE IF EXISTS `gastosservicios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `gastosservicios` (
+  `idGastosServicios` int(11) NOT NULL AUTO_INCREMENT,
+  `Descripcion` varchar(45) DEFAULT NULL,
+  `Sucursal_idSucursal` int(11) NOT NULL,
+  PRIMARY KEY (`idGastosServicios`),
+  KEY `fk_GastosServicios_Sucursal1_idx` (`Sucursal_idSucursal`),
+  CONSTRAINT `fk_GastosServicios_Sucursal1` FOREIGN KEY (`Sucursal_idSucursal`) REFERENCES `sucursal` (`idsucursal`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gastosservicios`
+--
+
+LOCK TABLES `gastosservicios` WRITE;
+/*!40000 ALTER TABLE `gastosservicios` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gastosservicios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gastosservicios_has_pgc`
+--
+
+DROP TABLE IF EXISTS `gastosservicios_has_pgc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `gastosservicios_has_pgc` (
+  `GastosServicios_idGastosServicios` int(11) NOT NULL,
+  `PGC_idPGC` int(11) NOT NULL,
+  PRIMARY KEY (`GastosServicios_idGastosServicios`,`PGC_idPGC`),
+  KEY `fk_GastosServicios_has_PGC_PGC1_idx` (`PGC_idPGC`),
+  KEY `fk_GastosServicios_has_PGC_GastosServicios1_idx` (`GastosServicios_idGastosServicios`),
+  CONSTRAINT `fk_GastosServicios_has_PGC_GastosServicios1` FOREIGN KEY (`GastosServicios_idGastosServicios`) REFERENCES `gastosservicios` (`idgastosservicios`),
+  CONSTRAINT `fk_GastosServicios_has_PGC_PGC1` FOREIGN KEY (`PGC_idPGC`) REFERENCES `pgc` (`idpgc`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gastosservicios_has_pgc`
+--
+
+LOCK TABLES `gastosservicios_has_pgc` WRITE;
+/*!40000 ALTER TABLE `gastosservicios_has_pgc` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gastosservicios_has_pgc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `marca`
+--
+
+DROP TABLE IF EXISTS `marca`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `marca` (
+  `idMarca` int(11) NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(45) NOT NULL,
+  `Nacionalidad` varchar(45) NOT NULL,
+  `Contacto_idContacto` int(11) NOT NULL,
+  PRIMARY KEY (`idMarca`),
+  KEY `fk_Marca_Contacto1_idx` (`Contacto_idContacto`),
+  CONSTRAINT `fk_Marca_Contacto1` FOREIGN KEY (`Contacto_idContacto`) REFERENCES `contacto` (`idcontacto`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `marca`
+--
+
+LOCK TABLES `marca` WRITE;
+/*!40000 ALTER TABLE `marca` DISABLE KEYS */;
+INSERT INTO `marca` VALUES (1,'Lamborghini','Italiano',4),(3,'Ferrari ','Italiano',2),(4,'Kia','Corea del Sur',3),(5,'Daewood','China',9);
+/*!40000 ALTER TABLE `marca` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `modelo`
+--
+
+DROP TABLE IF EXISTS `modelo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `modelo` (
+  `Codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `Descipcion` varchar(45) NOT NULL,
+  `Agrupacion_idAgrupacion` int(11) NOT NULL,
+  `Precio_idPrecio` int(11) NOT NULL,
+  PRIMARY KEY (`Codigo`),
+  KEY `fk_Modelo_Agrupacion1_idx` (`Agrupacion_idAgrupacion`),
+  KEY `fk_Modelo_Precio1_idx` (`Precio_idPrecio`),
+  CONSTRAINT `fk_Modelo_Agrupacion1` FOREIGN KEY (`Agrupacion_idAgrupacion`) REFERENCES `agrupacion` (`idagrupacion`),
+  CONSTRAINT `fk_Modelo_Precio1` FOREIGN KEY (`Precio_idPrecio`) REFERENCES `precio` (`idprecio`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `modelo`
+--
+
+LOCK TABLES `modelo` WRITE;
+/*!40000 ALTER TABLE `modelo` DISABLE KEYS */;
+INSERT INTO `modelo` VALUES (1,'Rio fun',1,7),(2,'Hard',1,8);
+/*!40000 ALTER TABLE `modelo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `modelo_has_compra`
+--
+
+DROP TABLE IF EXISTS `modelo_has_compra`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `modelo_has_compra` (
+  `Modelo_Codigo` int(11) NOT NULL,
+  `compra_idcompra` int(11) NOT NULL,
+  `precio_unitario` decimal(10,0) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  PRIMARY KEY (`Modelo_Codigo`,`compra_idcompra`),
+  KEY `fk_Modelo_has_compra_compra1_idx` (`compra_idcompra`),
+  KEY `fk_Modelo_has_compra_Modelo1_idx` (`Modelo_Codigo`),
+  CONSTRAINT `fk_Modelo_has_compra_Modelo1` FOREIGN KEY (`Modelo_Codigo`) REFERENCES `modelo` (`codigo`),
+  CONSTRAINT `fk_Modelo_has_compra_compra1` FOREIGN KEY (`compra_idcompra`) REFERENCES `compra` (`idcompra`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `modelo_has_compra`
+--
+
+LOCK TABLES `modelo_has_compra` WRITE;
+/*!40000 ALTER TABLE `modelo_has_compra` DISABLE KEYS */;
+INSERT INTO `modelo_has_compra` VALUES (1,1,25000,10),(2,1,35000,5);
+/*!40000 ALTER TABLE `modelo_has_compra` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pgc`
+--
+
+DROP TABLE IF EXISTS `pgc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `pgc` (
+  `idPGC` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` date NOT NULL,
+  `total` decimal(2,0) DEFAULT NULL,
+  PRIMARY KEY (`idPGC`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pgc`
+--
+
+LOCK TABLES `pgc` WRITE;
+/*!40000 ALTER TABLE `pgc` DISABLE KEYS */;
+INSERT INTO `pgc` VALUES (1,'2018-12-10',NULL);
+/*!40000 ALTER TABLE `pgc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pgc_has_sueldo`
+--
+
+DROP TABLE IF EXISTS `pgc_has_sueldo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `pgc_has_sueldo` (
+  `PGC_idPGC` int(11) NOT NULL,
+  `sueldo_idsueldo` int(11) NOT NULL,
+  PRIMARY KEY (`PGC_idPGC`,`sueldo_idsueldo`),
+  KEY `fk_PGC_has_sueldo_sueldo1_idx` (`sueldo_idsueldo`),
+  KEY `fk_PGC_has_sueldo_PGC1_idx` (`PGC_idPGC`),
+  CONSTRAINT `fk_PGC_has_sueldo_PGC1` FOREIGN KEY (`PGC_idPGC`) REFERENCES `pgc` (`idpgc`),
+  CONSTRAINT `fk_PGC_has_sueldo_sueldo1` FOREIGN KEY (`sueldo_idsueldo`) REFERENCES `sueldo` (`idsueldo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pgc_has_sueldo`
+--
+
+LOCK TABLES `pgc_has_sueldo` WRITE;
+/*!40000 ALTER TABLE `pgc_has_sueldo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pgc_has_sueldo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pgc_has_venta_boleta`
+--
+
+DROP TABLE IF EXISTS `pgc_has_venta_boleta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `pgc_has_venta_boleta` (
+  `PGC_idPGC` int(11) NOT NULL,
+  `Venta_Boleta_idVenta` int(11) NOT NULL,
+  PRIMARY KEY (`PGC_idPGC`,`Venta_Boleta_idVenta`),
+  KEY `fk_PGC_has_Venta_Boleta_Venta_Boleta1_idx` (`Venta_Boleta_idVenta`),
+  KEY `fk_PGC_has_Venta_Boleta_PGC1_idx` (`PGC_idPGC`),
+  CONSTRAINT `fk_PGC_has_Venta_Boleta_PGC1` FOREIGN KEY (`PGC_idPGC`) REFERENCES `pgc` (`idpgc`),
+  CONSTRAINT `fk_PGC_has_Venta_Boleta_Venta_Boleta1` FOREIGN KEY (`Venta_Boleta_idVenta`) REFERENCES `venta` (`idventa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pgc_has_venta_boleta`
+--
+
+LOCK TABLES `pgc_has_venta_boleta` WRITE;
+/*!40000 ALTER TABLE `pgc_has_venta_boleta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pgc_has_venta_boleta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `precio`
+--
+
+DROP TABLE IF EXISTS `precio`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `precio` (
+  `idPrecio` int(11) NOT NULL AUTO_INCREMENT,
+  `Precio` decimal(9,2) DEFAULT NULL,
+  `Concepto_idConcepto` int(11) NOT NULL,
+  PRIMARY KEY (`idPrecio`),
+  KEY `fk_Precio_Concepto1_idx` (`Concepto_idConcepto`),
+  CONSTRAINT `fk_Precio_Concepto1` FOREIGN KEY (`Concepto_idConcepto`) REFERENCES `concepto` (`idconcepto`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `precio`
+--
+
+LOCK TABLES `precio` WRITE;
+/*!40000 ALTER TABLE `precio` DISABLE KEYS */;
+INSERT INTO `precio` VALUES (2,20000.00,1),(3,20000.00,1),(4,20000.00,1),(5,20000.00,1),(6,45000.00,1),(7,46000.00,1),(8,35000.00,1);
+/*!40000 ALTER TABLE `precio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stock_almacen`
+--
+
+DROP TABLE IF EXISTS `stock_almacen`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `stock_almacen` (
+  `Modelo_Codigo` int(11) NOT NULL,
+  `Almacen_idAlmacen` int(11) NOT NULL,
+  `Cantidad` int(11) NOT NULL,
+  PRIMARY KEY (`Modelo_Codigo`,`Almacen_idAlmacen`),
+  KEY `fk_Modelo_has_Almacen_Almacen1_idx` (`Almacen_idAlmacen`),
+  KEY `fk_Modelo_has_Almacen_Modelo1_idx` (`Modelo_Codigo`),
+  CONSTRAINT `fk_Modelo_has_Almacen_Almacen1` FOREIGN KEY (`Almacen_idAlmacen`) REFERENCES `almacen` (`idalmacen`),
+  CONSTRAINT `fk_Modelo_has_Almacen_Modelo1` FOREIGN KEY (`Modelo_Codigo`) REFERENCES `modelo` (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stock_almacen`
+--
+
+LOCK TABLES `stock_almacen` WRITE;
+/*!40000 ALTER TABLE `stock_almacen` DISABLE KEYS */;
+INSERT INTO `stock_almacen` VALUES (2,1,20);
+/*!40000 ALTER TABLE `stock_almacen` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stock_sucursal`
+--
+
+DROP TABLE IF EXISTS `stock_sucursal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `stock_sucursal` (
+  `Modelo_Codigo` int(11) NOT NULL,
+  `Sucursal_idSucursal` int(11) NOT NULL,
+  `Cantidad` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Modelo_Codigo`,`Sucursal_idSucursal`),
+  KEY `fk_Modelo_has_Sucursal_Sucursal1_idx` (`Sucursal_idSucursal`),
+  KEY `fk_Modelo_has_Sucursal_Modelo1_idx` (`Modelo_Codigo`),
+  CONSTRAINT `fk_Modelo_has_Sucursal_Modelo1` FOREIGN KEY (`Modelo_Codigo`) REFERENCES `modelo` (`codigo`),
+  CONSTRAINT `fk_Modelo_has_Sucursal_Sucursal1` FOREIGN KEY (`Sucursal_idSucursal`) REFERENCES `sucursal` (`idsucursal`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stock_sucursal`
+--
+
+LOCK TABLES `stock_sucursal` WRITE;
+/*!40000 ALTER TABLE `stock_sucursal` DISABLE KEYS */;
+INSERT INTO `stock_sucursal` VALUES (2,1,10);
+/*!40000 ALTER TABLE `stock_sucursal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sucursal`
+--
+
+DROP TABLE IF EXISTS `sucursal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `sucursal` (
+  `idSucursal` int(11) NOT NULL AUTO_INCREMENT,
+  `Direccion` varchar(45) NOT NULL,
+  `Telefono` int(6) NOT NULL,
+  `Empresa_idEmpresa` int(11) NOT NULL,
+  PRIMARY KEY (`idSucursal`),
+  KEY `fk_Sucursal_Empresa_idx` (`Empresa_idEmpresa`),
+  CONSTRAINT `fk_Sucursal_Empresa` FOREIGN KEY (`Empresa_idEmpresa`) REFERENCES `empresa` (`idempresa`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sucursal`
+--
+
+LOCK TABLES `sucursal` WRITE;
+/*!40000 ALTER TABLE `sucursal` DISABLE KEYS */;
+INSERT INTO `sucursal` VALUES (1,'psj. Ayala 102',508690,1);
+/*!40000 ALTER TABLE `sucursal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sueldo`
+--
+
+DROP TABLE IF EXISTS `sueldo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `sueldo` (
+  `idsueldo` int(11) NOT NULL AUTO_INCREMENT,
+  `Asociado_DNI` int(11) NOT NULL,
+  `Cantidad` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`idsueldo`),
+  KEY `fk_sueldo_Asociado1_idx` (`Asociado_DNI`),
+  CONSTRAINT `fk_sueldo_Asociado1` FOREIGN KEY (`Asociado_DNI`) REFERENCES `asociado` (`dni`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sueldo`
+--
+
+LOCK TABLES `sueldo` WRITE;
+/*!40000 ALTER TABLE `sueldo` DISABLE KEYS */;
+INSERT INTO `sueldo` VALUES (1,72050160,20000.00),(2,75560789,2000.00),(3,79863456,1500.00),(4,79461382,45000.00);
+/*!40000 ALTER TABLE `sueldo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_cambiosoles`
+--
+
+DROP TABLE IF EXISTS `tipo_cambiosoles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tipo_cambiosoles` (
+  `idTipo_CambioSoles` int(11) NOT NULL AUTO_INCREMENT,
+  `Fecha` date NOT NULL,
+  `Hora` datetime NOT NULL,
+  `Compra` decimal(6,0) NOT NULL,
+  `Venta` decimal(6,0) DEFAULT NULL,
+  PRIMARY KEY (`idTipo_CambioSoles`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_cambiosoles`
+--
+
+LOCK TABLES `tipo_cambiosoles` WRITE;
+/*!40000 ALTER TABLE `tipo_cambiosoles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipo_cambiosoles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_persona`
+--
+
+DROP TABLE IF EXISTS `tipo_persona`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tipo_persona` (
+  `idTipo_Cliente` int(11) NOT NULL AUTO_INCREMENT,
+  `Personas` varchar(15) NOT NULL,
+  PRIMARY KEY (`idTipo_Cliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_persona`
+--
+
+LOCK TABLES `tipo_persona` WRITE;
+/*!40000 ALTER TABLE `tipo_persona` DISABLE KEYS */;
+INSERT INTO `tipo_persona` VALUES (1,'Natural'),(2,'Juridica');
+/*!40000 ALTER TABLE `tipo_persona` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_usuario`
+--
+
+DROP TABLE IF EXISTS `tipo_usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tipo_usuario` (
+  `idtipo_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idtipo_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_usuario`
+--
+
+LOCK TABLES `tipo_usuario` WRITE;
+/*!40000 ALTER TABLE `tipo_usuario` DISABLE KEYS */;
+INSERT INTO `tipo_usuario` VALUES (1,'administrador'),(2,'vendedor');
+/*!40000 ALTER TABLE `tipo_usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_venta`
+--
+
+DROP TABLE IF EXISTS `tipo_venta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tipo_venta` (
+  `idFactura` int(11) NOT NULL AUTO_INCREMENT,
+  `Tipo` varchar(12) DEFAULT NULL,
+  PRIMARY KEY (`idFactura`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_venta`
+--
+
+LOCK TABLES `tipo_venta` WRITE;
+/*!40000 ALTER TABLE `tipo_venta` DISABLE KEYS */;
+INSERT INTO `tipo_venta` VALUES (1,'factura'),(2,'Boleta');
+/*!40000 ALTER TABLE `tipo_venta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `usuario` (
+  `usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(45) NOT NULL,
+  `tipo_usuario_idtipo_usuario` int(11) NOT NULL,
+  PRIMARY KEY (`usuario`),
+  KEY `fk_usuario_tipo_usuario1_idx` (`tipo_usuario_idtipo_usuario`),
+  CONSTRAINT `fk_usuario_tipo_usuario1` FOREIGN KEY (`tipo_usuario_idtipo_usuario`) REFERENCES `tipo_usuario` (`idtipo_usuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=98456710 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (72050160,'root',1),(98456709,'vendedor',2);
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `venta`
+--
+
+DROP TABLE IF EXISTS `venta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `venta` (
+  `idVenta` int(11) NOT NULL AUTO_INCREMENT,
+  `Fecha` date NOT NULL,
+  `Cliente_DNI` int(11) NOT NULL,
+  `Estado_Venta_idEstado_Venta` int(11) NOT NULL,
+  `Tipo_Venta_idFactura` int(11) NOT NULL,
+  PRIMARY KEY (`idVenta`),
+  KEY `fk_Venta_Cliente1_idx` (`Cliente_DNI`),
+  KEY `fk_Venta_Estado_Venta1_idx` (`Estado_Venta_idEstado_Venta`),
+  KEY `fk_Venta_Boleta_Tipo_Venta1_idx` (`Tipo_Venta_idFactura`),
+  CONSTRAINT `fk_Venta_Boleta_Tipo_Venta1` FOREIGN KEY (`Tipo_Venta_idFactura`) REFERENCES `tipo_venta` (`idfactura`),
+  CONSTRAINT `fk_Venta_Cliente1` FOREIGN KEY (`Cliente_DNI`) REFERENCES `cliente` (`dni`),
+  CONSTRAINT `fk_Venta_Estado_Venta1` FOREIGN KEY (`Estado_Venta_idEstado_Venta`) REFERENCES `estado_venta` (`idestado_venta`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `venta`
+--
+
+LOCK TABLES `venta` WRITE;
+/*!40000 ALTER TABLE `venta` DISABLE KEYS */;
+INSERT INTO `venta` VALUES (2,'2018-12-04',72050160,1,1);
+/*!40000 ALTER TABLE `venta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `venta_detalle`
+--
+
+DROP TABLE IF EXISTS `venta_detalle`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `venta_detalle` (
+  `Venta_idVenta` int(11) NOT NULL,
+  `Modelo_Codigo` int(11) NOT NULL,
+  `Cantidad` varchar(45) DEFAULT NULL,
+  `Precio` decimal(19,0) DEFAULT NULL,
+  PRIMARY KEY (`Venta_idVenta`,`Modelo_Codigo`),
+  KEY `fk_Venta_has_Modelo_Modelo1_idx` (`Modelo_Codigo`),
+  KEY `fk_Venta_has_Modelo_Venta1_idx` (`Venta_idVenta`),
+  CONSTRAINT `fk_Venta_has_Modelo_Modelo1` FOREIGN KEY (`Modelo_Codigo`) REFERENCES `modelo` (`codigo`),
+  CONSTRAINT `fk_Venta_has_Modelo_Venta1` FOREIGN KEY (`Venta_idVenta`) REFERENCES `venta` (`idventa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `venta_detalle`
+--
+
+LOCK TABLES `venta_detalle` WRITE;
+/*!40000 ALTER TABLE `venta_detalle` DISABLE KEYS */;
+INSERT INTO `venta_detalle` VALUES (2,1,'1',35000);
+/*!40000 ALTER TABLE `venta_detalle` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-12-08 15:29:10
